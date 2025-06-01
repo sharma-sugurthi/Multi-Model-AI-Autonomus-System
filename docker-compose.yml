@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - API_BASE_URL=http://app:8000
+    depends_on:
+      - redis
+    volumes:
+      - .:/app
+    networks:
+      - flowbit-network
+
+  redis:
+    image: redis:6-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - flowbit-network
+
+  # Optional: Add a simple web UI for testing
+  web-ui:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - API_URL=http://app:8000
+    volumes:
+      - .:/app
+    command: python -m http.server 3000
+    depends_on:
+      - app
+    networks:
+      - flowbit-network
+
+volumes:
+  redis-data:
+
+networks:
+  flowbit-network:
+    driver: bridge 

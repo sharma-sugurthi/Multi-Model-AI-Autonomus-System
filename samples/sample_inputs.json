@@ -1,0 +1,70 @@
+{
+    "email_samples": [
+        {
+            "content": "From: customer@example.com\nSubject: Urgent Service Issue\nDate: 2024-01-01\n\nDear Support,\n\nI am writing to express my extreme dissatisfaction with your service. The system has been down for 3 days now, and this is causing significant business impact.\n\nPlease address this immediately.\n\nBest regards,\nJohn Doe",
+            "expected_format": "email",
+            "expected_intent": "complaint",
+            "expected_tone": "escalation",
+            "expected_urgency": "high"
+        },
+        {
+            "content": "From: vendor@example.com\nSubject: Invoice #INV-2024-001\nDate: 2024-01-01\n\nDear Accounts,\n\nPlease find attached our invoice for the recent services.\n\nThank you for your business.\n\nBest regards,\nVendor Team",
+            "expected_format": "email",
+            "expected_intent": "invoice",
+            "expected_tone": "polite",
+            "expected_urgency": "low"
+        }
+    ],
+    "json_samples": [
+        {
+            "content": {
+                "invoice_number": "INV-2024-001",
+                "amount": 15000.00,
+                "currency": "USD",
+                "items": [
+                    {
+                        "description": "Product A",
+                        "quantity": 1500,
+                        "price": 10.00
+                    }
+                ]
+            },
+            "expected_format": "json",
+            "expected_intent": "invoice",
+            "expected_anomalies": ["High-value invoice detected (>$10,000)"]
+        },
+        {
+            "content": {
+                "request_id": "RFQ-2024-001",
+                "items": [
+                    {
+                        "product_id": "PROD-001",
+                        "quantity": 100,
+                        "specifications": {
+                            "color": "blue",
+                            "size": "large"
+                        }
+                    }
+                ],
+                "delivery_date": "2024-01-15"
+            },
+            "expected_format": "json",
+            "expected_intent": "rfq",
+            "expected_anomalies": []
+        }
+    ],
+    "pdf_samples": [
+        {
+            "content": "INVOICE\nInvoice Number: INV-2024-002\nDate: 2024-01-01\n\nThis document contains GDPR compliance requirements and data protection measures.\nTotal Amount: $5,000.00\n\nThank you for your business.",
+            "expected_format": "pdf",
+            "expected_intent": "regulation",
+            "expected_compliance_flags": ["GDPR compliance mentioned"]
+        },
+        {
+            "content": "POLICY DOCUMENT\n\nThis policy outlines our commitment to data protection and privacy.\n\nKey Points:\n1. GDPR Compliance\n2. Data Retention\n3. User Rights\n\nFor more information, please contact our compliance team.",
+            "expected_format": "pdf",
+            "expected_intent": "regulation",
+            "expected_compliance_flags": ["GDPR compliance mentioned"]
+        }
+    ]
+} 
