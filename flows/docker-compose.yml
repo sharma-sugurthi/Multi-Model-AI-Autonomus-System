@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  langflow:
+    image: logspace/langflow:latest
+    ports:
+      - "7860:7860"
+    volumes:
+      - ./:/app
+    environment:
+      - LANGFLOW_HOST=0.0.0.0
+      - LANGFLOW_PORT=7860
+      - LANGFLOW_DEFAULT_FLOWS_PATH=/app
+      - LANGFLOW_DATABASE_URL=redis://redis:6379/0
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+volumes:
+  redis_data:
+
+networks:
+  langflow-network:
+    driver: bridge 

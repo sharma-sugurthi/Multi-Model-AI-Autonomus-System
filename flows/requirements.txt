@@ -1,0 +1,4 @@
+langflow==0.5.3
+python-dotenv>=1.0.0
+# Excluding jina to avoid dependency conflicts
+# jina==3.15.2 

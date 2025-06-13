@@ -1,0 +1,5 @@
+{
+  "/page": "app/page.js",
+  "/api/langflow/workflows/route": "app/api/langflow/workflows/route.js",
+  "/api/langflow/executions/route": "app/api/langflow/executions/route.js"
+}

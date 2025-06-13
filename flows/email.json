@@ -1,0 +1,51 @@
+{
+  "name": "Email Agent",
+  "description": "Processes and analyzes email content",
+  "nodes": [
+    {
+      "id": "email_input",
+      "type": "InputNode",
+      "data": {
+        "input_type": "email",
+        "required": true
+      }
+    },
+    {
+      "id": "email_processor",
+      "type": "EmailProcessor",
+      "data": {
+        "extract_metadata": true,
+        "extract_content": true
+      }
+    },
+    {
+      "id": "content_analyzer",
+      "type": "ContentAnalyzer",
+      "data": {
+        "analyze_sentiment": true,
+        "extract_keywords": true
+      }
+    },
+    {
+      "id": "output_formatter",
+      "type": "OutputFormatter",
+      "data": {
+        "format": "json"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "email_input",
+      "target": "email_processor"
+    },
+    {
+      "source": "email_processor",
+      "target": "content_analyzer"
+    },
+    {
+      "source": "content_analyzer",
+      "target": "output_formatter"
+    }
+  ]
+} 

@@ -9,25 +9,34 @@ services:
       - "8000:8000"
     environment:
       - REDIS_URL=redis://redis:6379
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - API_BASE_URL=http://app:8000
+      - LANGFLOW_URL=http://langflow:7860
     depends_on:
       - redis
+      - langflow
     volumes:
-      - .:/app
-    networks:
-      - flowbit-network
+      - ./app:/app/app
+      - ./flows:/app/flows
+
+  langflow:
+    image: logspace/langflow:latest
+    ports:
+      - "7860:7860"
+    environment:
+      - LANGFLOW_DEFAULT_FLOWS_PATH=/app/flows
+      - LANGFLOW_REDIS_HOST=redis
+      - LANGFLOW_REDIS_PORT=6379
+    volumes:
+      - ./flows:/app/flows
+    depends_on:
+      - redis
 
   redis:
-    image: redis:6-alpine
+    image: redis:latest
     ports:
       - "6379:6379"
     volumes:
-      - redis-data:/data
-    networks:
-      - flowbit-network
+      - redis_data:/data
 
-  # Optional: Add a simple web UI for testing
   web-ui:
     build:
       context: .
@@ -41,12 +50,10 @@ services:
     command: python -m http.server 3000
     depends_on:
       - app
-    networks:
-      - flowbit-network
 
 volumes:
-  redis-data:
+  redis_data:
 
 networks:
   flowbit-network:
-    driver: bridge 
+    driver: bridge

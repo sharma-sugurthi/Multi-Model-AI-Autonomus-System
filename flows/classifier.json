@@ -1,0 +1,58 @@
+{
+  "name": "Classifier Agent",
+  "description": "Classifies and categorizes input data",
+  "nodes": [
+    {
+      "id": "text_input",
+      "type": "InputNode",
+      "data": {
+        "input_type": "text",
+        "required": true
+      }
+    },
+    {
+      "id": "text_preprocessor",
+      "type": "TextPreprocessor",
+      "data": {
+        "clean_text": true,
+        "remove_stopwords": true,
+        "lemmatize": true
+      }
+    },
+    {
+      "id": "classifier",
+      "type": "Classifier",
+      "data": {
+        "model_type": "bert",
+        "categories": [
+          "positive",
+          "negative",
+          "neutral"
+        ],
+        "confidence_threshold": 0.7
+      }
+    },
+    {
+      "id": "output_formatter",
+      "type": "OutputFormatter",
+      "data": {
+        "format": "json",
+        "include_confidence": true
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "text_input",
+      "target": "text_preprocessor"
+    },
+    {
+      "source": "text_preprocessor",
+      "target": "classifier"
+    },
+    {
+      "source": "classifier",
+      "target": "output_formatter"
+    }
+  ]
+} 

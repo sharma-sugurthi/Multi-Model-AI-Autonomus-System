@@ -1,0 +1,54 @@
+{
+  "name": "JSON Agent",
+  "description": "Processes and transforms JSON data",
+  "nodes": [
+    {
+      "id": "json_input",
+      "type": "InputNode",
+      "data": {
+        "input_type": "json",
+        "required": true
+      }
+    },
+    {
+      "id": "json_validator",
+      "type": "JSONValidator",
+      "data": {
+        "validate_schema": true,
+        "strict_mode": true
+      }
+    },
+    {
+      "id": "json_transformer",
+      "type": "JSONTransformer",
+      "data": {
+        "transform_rules": {
+          "flatten": true,
+          "normalize": true
+        }
+      }
+    },
+    {
+      "id": "output_formatter",
+      "type": "OutputFormatter",
+      "data": {
+        "format": "json",
+        "pretty_print": true
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "json_input",
+      "target": "json_validator"
+    },
+    {
+      "source": "json_validator",
+      "target": "json_transformer"
+    },
+    {
+      "source": "json_transformer",
+      "target": "output_formatter"
+    }
+  ]
+} 

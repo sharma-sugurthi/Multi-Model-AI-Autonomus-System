@@ -1,0 +1,53 @@
+{
+  "name": "PDF Agent",
+  "description": "Processes and analyzes PDF documents",
+  "nodes": [
+    {
+      "id": "pdf_input",
+      "type": "InputNode",
+      "data": {
+        "input_type": "pdf",
+        "required": true
+      }
+    },
+    {
+      "id": "pdf_processor",
+      "type": "PDFProcessor",
+      "data": {
+        "extract_text": true,
+        "extract_metadata": true,
+        "extract_images": false
+      }
+    },
+    {
+      "id": "text_analyzer",
+      "type": "TextAnalyzer",
+      "data": {
+        "extract_keywords": true,
+        "summarize": true,
+        "extract_entities": true
+      }
+    },
+    {
+      "id": "output_formatter",
+      "type": "OutputFormatter",
+      "data": {
+        "format": "json"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "pdf_input",
+      "target": "pdf_processor"
+    },
+    {
+      "source": "pdf_processor",
+      "target": "text_analyzer"
+    },
+    {
+      "source": "text_analyzer",
+      "target": "output_formatter"
+    }
+  ]
+} 

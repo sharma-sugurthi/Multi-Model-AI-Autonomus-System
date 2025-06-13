@@ -1,0 +1,39 @@
+{
+  "name": "JSON Agent",
+  "description": "Processes and validates JSON data",
+  "nodes": [
+    {
+      "id": "input",
+      "type": "InputNode",
+      "data": {
+        "input_type": "string",
+        "required": true
+      }
+    },
+    {
+      "id": "json_processor",
+      "type": "JSONProcessorNode",
+      "data": {
+        "validate_schema": true,
+        "format_output": true
+      }
+    },
+    {
+      "id": "output",
+      "type": "OutputNode",
+      "data": {
+        "output_type": "json"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "input",
+      "target": "json_processor"
+    },
+    {
+      "source": "json_processor",
+      "target": "output"
+    }
+  ]
+} 

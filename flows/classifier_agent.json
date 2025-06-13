@@ -1,0 +1,40 @@
+{
+  "name": "Classifier Agent",
+  "description": "Classifies and categorizes input data",
+  "nodes": [
+    {
+      "id": "input",
+      "type": "InputNode",
+      "data": {
+        "input_type": "string",
+        "required": true
+      }
+    },
+    {
+      "id": "classifier",
+      "type": "ClassifierNode",
+      "data": {
+        "model_type": "text",
+        "categories": ["positive", "negative", "neutral"],
+        "confidence_threshold": 0.7
+      }
+    },
+    {
+      "id": "output",
+      "type": "OutputNode",
+      "data": {
+        "output_type": "json"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "input",
+      "target": "classifier"
+    },
+    {
+      "source": "classifier",
+      "target": "output"
+    }
+  ]
+} 
